@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ModalUser({ open, onClose, action, user, addUsuario, editUsuario }) {
+export default function ModalUser({ open, onClose, action, user, addUsuario, updateUsuario }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -15,7 +15,7 @@ export default function ModalUser({ open, onClose, action, user, addUsuario, edi
     if (action === "Agregar") {
       await addUsuario(formJson);
     } else if (action === "Modificar") {
-      await editUsuario(user.id, formJson);
+      await updateUsuario(user.id, formJson);
     }
     onClose();
   };

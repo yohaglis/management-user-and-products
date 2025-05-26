@@ -6,9 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit'; 
 
-function TableUser({ usersList, onDelete, onEdit }) {
+function TableUser({ usuarios, onDelete, onEdit }) {
    
   const handleOnClickDelete = (id) => {
     onDelete(id);
@@ -31,7 +31,7 @@ function TableUser({ usersList, onDelete, onEdit }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {usersList.map((user) => (
+          {usuarios.map((user) => (
             <TableRow
               key={user.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

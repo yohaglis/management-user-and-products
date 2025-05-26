@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
 import TableUser from '../../TableUser/TableUser';
 import ModalUser from '../../ModalUser/ModalUser';
+import ModalError from '../../ModalError/ModalError';
 import { Typography, Button } from '@mui/material';
 import { useUsuarios } from "../../../hooks/useUsuarios";
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 function Usuarios() {
   const {
-    usersList,
-    loading,
-    error,
-    fetchUsuarios,
+    usuarios,
+    usuariosLoading,
+    usuariosError,
+    usuarioAddError,
+    usuarioUpdateError,
+    usuarioRemoveError,
+    getUsuarios,
     removeUsuario,
-    addUsuario, 
-    editUsuario
+    addUsuario,
+    updateUsuario
   } = useUsuarios();
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState('');
+  const [errorOpen, setErrorOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   
   const handleOnClickAdd = () => {
@@ -26,7 +32,7 @@ function Usuarios() {
 
   const handleDelete = async (id) => {
    await removeUsuario(id);
-  //  fetchUsuarios(); 
+  // getUsuarios(); 
   };
 
   const handleEdit = async (user) => {
@@ -40,9 +46,19 @@ function Usuarios() {
     setSelectedUser(null);
  };
 
+  const handleCloseErrorModal = () => {
+    setErrorOpen(false);
+     getUsuarios();
+    setSelectedUser(null);
+  };
+
   useEffect(() => {
-    fetchUsuarios();
-  }, [fetchUsuarios]);
+   getUsuarios();
+  }, [getUsuarios]);
+
+  useEffect(() => {
+  setErrorOpen(!!usuarioAddError || !!usuarioUpdateError || !!usuarioRemoveError);
+  }, [usuarioAddError, usuarioUpdateError, usuarioRemoveError]);
 
   return (
     <>
@@ -50,14 +66,15 @@ function Usuarios() {
         <Typography variant="h4" gutterBottom>
           Listado de usuarios
         </Typography>
-        <Button variant="contained" color="primary" onClick={handleOnClickAdd}>
+        <Button variant="contained" color="primary" disabled={!!usuariosError} onClick={handleOnClickAdd}>
           Agregar Nuevo Usuario
         </Button>
       </div>
-      {loading && <div style={{ marginTop: '120px' }}>Cargando...</div>}
-      {error && <div style={{ color: 'red' }}>Error: {error}</div>}
-      {!loading && !error && <TableUser usersList={usersList} onDelete={handleDelete} onEdit={handleEdit} />}
-      <ModalUser open={open} onClose={handleCloseModal} action={action} user={selectedUser} addUsuario={addUsuario} editUsuario={editUsuario}/>
+      {usuariosLoading && <div style={{ marginTop: '120px' }}>Cargando...</div>}
+      {usuariosError && <div style={{ color: 'red' }}> <ReportProblemIcon color='error' sx={{ marginRight: 1 }}/>{usuariosError}</div>}
+      {!usuariosLoading && !usuariosError && <TableUser usuarios={usuarios} onDelete={handleDelete} onEdit={handleEdit} />}
+      <ModalUser open={open} onClose={handleCloseModal} action={action} user={selectedUser} addUsuario={addUsuario} updateUsuario={updateUsuario}/>
+      <ModalError  open={errorOpen}  onClose={handleCloseErrorModal}  message={usuarioAddError || usuarioUpdateError || usuarioRemoveError} />
     </>
   );
 }

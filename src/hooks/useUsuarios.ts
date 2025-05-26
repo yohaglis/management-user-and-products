@@ -1,68 +1,56 @@
 import { useReducer, useCallback} from "react";
 import {
-  getUsuarios,
-  createUsuario,
-  updateUsuario,
-  deleteUsuario,
-  getUsuarioById
-} from "../api/Rule_Usuarios";
-import { usuariosReducer, initialState } from "../context/usuariosReducer";
+  getUsers,
+  addUser,
+  updateUser,
+  removeUser} from "../api/Rule_Usuarios";
+import { reducer, initialState } from "../context/reducer";
 
 export function useUsuarios() {
-  const [state, dispatch] = useReducer(usuariosReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchUsuarios =  useCallback(async () => {
-    dispatch({ type: "FETCH_START" });
+  const getUsuarios =  useCallback(async () => {
+    dispatch({ type: "USUARIOS_LOADING" });
     try {
-      const data = await getUsuarios();
-      dispatch({ type: "FETCH_SUCCESS", payload: data });
+      const data = await getUsers();
+      dispatch({ type: "USUARIOS_SUCCESS", payload: data });
     } catch (error) {
-      dispatch({ type: "FETCH_ERROR", payload: error.message });
+      dispatch({ type: "USUARIOS_ERROR", payload: "Error al cargar los usuarios. Por favor intente mas tarde." });
     }
   }, []);
 
   const addUsuario = async (usuario) => {
     try {
-      const data = await createUsuario(usuario);
-      dispatch({ type: "CREATE_SUCCESS", payload: data });
+      const data = await addUser(usuario);
+      dispatch({ type: "USUARIO_ADD_SUCCESS", payload: data });
     } catch (error) {
-      dispatch({ type: "FETCH_ERROR", payload: error.message });
+      dispatch({ type: "USUARIO_ADD_ERROR", payload: "Error al agregar el usuario. Por favor intente mas tarde." });
     }
   };
 
-  const editUsuario = async (id, usuario) => {
+  const updateUsuario = async (id, usuario) => {
     try {
-      const data = await updateUsuario(id, usuario);
-      dispatch({ type: "UPDATE_SUCCESS", payload: data });
+      const data = await updateUser(id, usuario);
+      dispatch({ type: "USUARIO_UPDATE_SUCCESS", payload: data });
     } catch (error) {
-      dispatch({ type: "FETCH_ERROR", payload: error.message });
+      dispatch({ type: "USUARIO_UPDATE_ERROR", payload: "Error al actualizar el usuario. Por favor intente mas tarde." });
     }
   };
 
   const removeUsuario = async (id) => {
     try {
-      await deleteUsuario(id);
-      dispatch({ type: "DELETE_SUCCESS", payload: id });
+      await removeUser(id);
+      dispatch({ type: "USUARIO_REMOVE_SUCCESS", payload: id });
     } catch (error) {
-      dispatch({ type: "FETCH_ERROR", payload: error.message });
-    }
-  };
-
-  const fetchUsuarioById = async (id) => {
-    try {
-      const data = await getUsuarioById(id);
-      dispatch({ type: "GET_BY_ID_SUCCESS", payload: data });
-    } catch (error) {
-      dispatch({ type: "FETCH_ERROR", payload: error.message });
+      dispatch({ type: "USUARIO_REMOVE_ERROR", payload: "Error al eliminar el usuario. Por favor intente mas tarde." });
     }
   };
 
   return {
     ...state,
-    fetchUsuarios,
+    getUsuarios,
     addUsuario,
-    editUsuario,
-    removeUsuario,
-    fetchUsuarioById,
+    updateUsuario,
+    removeUsuario
   };
 }
