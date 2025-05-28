@@ -63,7 +63,7 @@ function Productos() {
   return (
     <div>
       {productosLoading && (
-        <Typography variant="body1" component="p" gutterBottom>
+        <Typography variant="body1" component="p" gutterBottom  style={{ marginTop: '120px' }}>
           Cargando productos...
         </Typography>
       )}
@@ -82,7 +82,7 @@ function Productos() {
       {!productosLoading && productos.length > 0 && (
         <>
           <div className={styles.header}>
-            <Typography variant="h2" component="h2" gutterBottom>
+            <Typography variant="h4" component="h2" gutterBottom>
               Catalogo de Productos
             </Typography>
             <Button

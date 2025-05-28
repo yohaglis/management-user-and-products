@@ -66,7 +66,7 @@ function Usuarios() {
       {usuariosError && <div style={{ color: 'red' }}> <ReportProblemIcon color='error' sx={{ marginRight: 1 }}/>{usuariosError}</div>}
       {!usuariosLoading && !usuariosError && 
       <>
-      <div style={{ display: 'flex', width: '850px', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <Typography variant="h4" gutterBottom>
             Listado de usuarios
           </Typography>
