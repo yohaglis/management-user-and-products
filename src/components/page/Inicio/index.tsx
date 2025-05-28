@@ -1,12 +1,11 @@
-import Layout from '../../Layout/Layout';
-import styles from './styles.module.scss'
+/* eslint-disable react/react-in-jsx-scope */
+import Layout from '../Inicio/Components/Layout';
 import { Card, CardContent, Typography } from '@mui/material';
 
 function Inicio() {
   return (
-    <Layout>
-      <div className={styles.contenido}>
-        <Card>
+    <Layout>    
+       <Card>
           <CardContent>
             <Typography variant="h4" gutterBottom>
               ¡Bienvenido a nuestro sistema de gestión!
@@ -35,8 +34,7 @@ function Inicio() {
                 <strong>Eliminar:</strong> Dar de baja productos del catálogo, eliminando su información de la base de datos.
             </Typography>
           </CardContent>
-        </Card>
-      </div>
+        </Card> 
     </Layout>
   )
 }

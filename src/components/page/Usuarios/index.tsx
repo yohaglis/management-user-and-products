@@ -1,7 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from "react";
-import TableUser from '../../TableUser/TableUser';
-import ModalUser from '../../ModalUser/ModalUser';
-import ModalError from '../../ModalError/ModalError';
+import TableUser from '../Usuarios/Components/TableUser';
+import ModalUser from '../Usuarios/Components/ModalUser';
+import ModalError from '../../ModalError';
 import { Typography, Button } from '@mui/material';
 import { useUsuarios } from "../../../hooks/useUsuarios";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -31,8 +32,7 @@ function Usuarios() {
   };
 
   const handleDelete = async (id) => {
-   await removeUsuario(id);
-  // getUsuarios(); 
+   await removeUsuario(id); 
   };
 
   const handleEdit = async (user) => {
@@ -61,18 +61,21 @@ function Usuarios() {
   }, [usuarioAddError, usuarioUpdateError, usuarioRemoveError]);
 
   return (
-    <>
-      <div style={{ display: 'flex', width: '850px', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <Typography variant="h4" gutterBottom>
-          Listado de usuarios
-        </Typography>
-        <Button variant="contained" color="primary" disabled={!!usuariosError} onClick={handleOnClickAdd}>
-          Agregar Nuevo Usuario
-        </Button>
-      </div>
-      {usuariosLoading && <div style={{ marginTop: '120px' }}>Cargando...</div>}
+    <>      
+      {usuariosLoading && <div style={{ marginTop: '120px' }}>Cargando usuarios...</div>}
       {usuariosError && <div style={{ color: 'red' }}> <ReportProblemIcon color='error' sx={{ marginRight: 1 }}/>{usuariosError}</div>}
-      {!usuariosLoading && !usuariosError && <TableUser usuarios={usuarios} onDelete={handleDelete} onEdit={handleEdit} />}
+      {!usuariosLoading && !usuariosError && 
+      <>
+      <div style={{ display: 'flex', width: '850px', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <Typography variant="h4" gutterBottom>
+            Listado de usuarios
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleOnClickAdd}>
+            Agregar Nuevo Usuario
+          </Button>
+        </div>
+        <TableUser usuarios={usuarios} onDelete={handleDelete} onEdit={handleEdit} />
+      </>}
       <ModalUser open={open} onClose={handleCloseModal} action={action} user={selectedUser} addUsuario={addUsuario} updateUsuario={updateUsuario}/>
       <ModalError  open={errorOpen}  onClose={handleCloseErrorModal}  message={usuarioAddError || usuarioUpdateError || usuarioRemoveError} />
     </>

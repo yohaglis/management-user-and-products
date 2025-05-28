@@ -1,10 +1,13 @@
-.card {
-    display: inline-table;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 1rem;
-    margin: 1rem;
-    border-radius: 0.5rem;
-    background-color: #5794bf;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+}
+

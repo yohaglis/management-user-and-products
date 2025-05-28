@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,18 +7,38 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ModalUser({ open, onClose, action, user, addUsuario, updateUsuario }) {
+interface Producto {
+  id?: string | number;
+  image?: string;
+  title?: string;
+  price?: string | number;
+  category?: string;
+}
+
+interface ModalProductProps {
+  open: boolean;
+  onClose: () => void;
+  action: string;
+  producto?: Producto | null;
+  addProducto: (data: Producto) => Promise<void>;
+  updateProducto: (id: string | number, data: Producto) => Promise<void>;
+}
+
+export default function ModalProduct({ open, onClose, action, producto, addProducto, updateProducto }: ModalProductProps) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
 
     if (action === "Agregar") {
-      await addUsuario(formJson);
+      await addProducto(formJson);
+      onClose();
     } else if (action === "Modificar") {
-      await updateUsuario(user.id, formJson);
+      if (producto && producto.id !== undefined) {
+        await updateProducto(producto.id, formJson);
+        onClose();
+      }
     }
-    onClose();
   };
   
   return (
@@ -32,55 +53,55 @@ export default function ModalUser({ open, onClose, action, user, addUsuario, upd
         },
         }}
       >
-        <DialogTitle>{action} Usuario</DialogTitle>
+        <DialogTitle>{action} Producto</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Para agregar o modificar un usuario, por favor ingrese la información requerida.
+            Para agregar o modificar un producto, por favor ingrese la información requerida.
           </DialogContentText>
           <TextField
             autoFocus
             required
             margin="dense"
-            id="name"
-            name="name"
-            label="Nombre"
-            type="text"           
-            fullWidth
-            variant="standard"
-            defaultValue={user ? user.name : ""}
-          />
-          <TextField           
-            required
-            margin="dense"
-            id="username"
-            name="username"
-            label="Apellido"
+            id="image"
+            name="image"
+            label="URL de la Imagen"
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={user ? user.username : ""}
+            defaultValue={producto ? producto.image : ""}
           />
           <TextField           
             required
             margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
+            id="title"
+            name="title"
+            label="Nombre del Producto"
+            type="text"
             fullWidth
             variant="standard"
-            defaultValue={user ? user.email : ""}
+            defaultValue={producto ? producto.title : ""}
+          />
+          <TextField           
+            required
+            margin="dense"
+            id="price"
+            name="price"
+            label="Precio"
+            type="text"
+            fullWidth
+            variant="standard"
+            defaultValue={producto ? producto.price : ""}
           />
           <TextField         
             required
             margin="dense"
-            id="name"
-            name="phone"
-            label="Teléfono"
+            id="category"
+            name="category"
+            label="Categoría"
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={user ? user.phone : ""}
+            defaultValue={producto ? producto.category : ""}
           />
         </DialogContent>
         <DialogActions>

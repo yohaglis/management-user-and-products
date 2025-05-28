@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const BASE_URL = "https://jsonplaceholder.typicode.com/users";
+
 export const getUsers = async () => {
   try {
-    const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+    const response = await axios.get(BASE_URL);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los usuarios:", error);
@@ -11,7 +13,7 @@ export const getUsers = async () => {
 }
 export const addUser = async (usuario) => {
   try {
-    const response = await axios.post("https://jsonplaceholder.typicode.com/users", usuario);
+    const response = await axios.post(BASE_URL, usuario);
     return response.data;
   } catch (error) {
     console.error("Error al crear el usuario:", error);
@@ -20,7 +22,7 @@ export const addUser = async (usuario) => {
 }
 export const updateUser = async (id, usuario) => {
   try {
-    const response = await axios.put(`https://jsonplaceholder.typicode.com/users/${id}`, usuario);
+    const response = await axios.put(`${BASE_URL}/${id}`, usuario);
     return response.data;
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
@@ -29,7 +31,7 @@ export const updateUser = async (id, usuario) => {
 }
 export const removeUser = async (id) => {
   try {
-    const response = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+    const response = await axios.delete(`${BASE_URL}/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error al eliminar el usuario:", error);

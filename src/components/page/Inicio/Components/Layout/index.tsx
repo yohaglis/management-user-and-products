@@ -1,6 +1,11 @@
-import Navbar from '../Navbar/Navbar';
+/* eslint-disable react/react-in-jsx-scope */
+import Navbar from '../Navbar';
 
-function Layout({ children }) {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+function Layout({ children }: LayoutProps) {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />

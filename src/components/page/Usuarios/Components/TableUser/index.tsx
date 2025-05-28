@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,9 +9,22 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit'; 
 
-function TableUser({ usuarios, onDelete, onEdit }) {
-   
-  const handleOnClickDelete = (id) => {
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+}
+interface TableUserProps {
+  usuarios: User[];
+  onDelete: (id: number) => void;
+  onEdit: (user: User) => void;
+}
+
+function TableUser({ usuarios, onDelete, onEdit }: TableUserProps) {
+
+  const handleOnClickDelete = (id: number) => {
     onDelete(id);
   }
 
@@ -41,8 +55,8 @@ function TableUser({ usuarios, onDelete, onEdit }) {
               <TableCell align="left">{user.email}</TableCell>
               <TableCell align="left">{user.phone}</TableCell>
               <TableCell align="center">
-                <EditIcon color='primary' onClick={() => handleOnClickEdit(user)}  sx={{ marginLeft: 1 }}/>
-                <DeleteIcon color='primary' onClick={() => handleOnClickDelete(user.id)}  sx={{ marginLeft: 1 }}/>               
+                <EditIcon color='primary' onClick={() => handleOnClickEdit(user)}  sx={{ marginLeft: 1, cursor: 'pointer' }}/>
+                <DeleteIcon color='primary' onClick={() => handleOnClickDelete(user.id)}  sx={{ marginLeft: 1, cursor: 'pointer' }}/>               
               </TableCell>
             </TableRow>
           ))}
