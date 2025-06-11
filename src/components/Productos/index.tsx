@@ -1,9 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from "react";
-import CardProduct from "../Productos/Components/CardProduct";
-import { useProductos } from "../../../hooks/useProductos";
-import ModalProduct from "../Productos/Components/ModalProduct";
-import ModalError from "../../ModalError";
+import CardProduct from "./CardProduct";
+import { useProductos } from "../../hooks/useProductos";
+import ModalProduct from "./ModalProduct";
+import ModalError from "../ModalError";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import styles from "./styles.module.scss";
 import { Typography, Button } from "@mui/material";

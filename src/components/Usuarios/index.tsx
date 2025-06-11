@@ -1,10 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from "react";
-import TableUser from '../Usuarios/Components/TableUser';
-import ModalUser from '../Usuarios/Components/ModalUser';
-import ModalError from '../../ModalError';
+import TableUser from './TableUser';
+import ModalUser from './ModalUser';
+import ModalError from '../ModalError';
 import { Typography, Button } from '@mui/material';
-import { useUsuarios } from "../../../hooks/useUsuarios";
+import { useUsuarios } from "../../hooks/useUsuarios";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 function Usuarios() {
