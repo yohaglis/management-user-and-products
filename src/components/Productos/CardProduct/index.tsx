@@ -28,7 +28,7 @@ function CardProduct({ producto, onDelete, onEdit }: CardProductProps) {
   }
   return (
     <div className={styles.card}>
-      <Card variant="outlined" sx={{ maxWidth: 345 }}>
+      <Card variant="outlined" sx={{ maxWidth: 346 }}>
         <CardContent>
           <div className={styles.actions}>
             <EditIcon onClick={() => handleOnClickEdit(producto)}  sx={{ marginLeft: 1, marginTop: 2, cursor: 'pointer' }}/>
